@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<h:head>
+		<title>Citizens List</title>
+	</h:head>
+	<body>
+	    <h3>Citizen List</h3>
+	    <h:form rendered="#{not empty citizensController.getCitizensList().isEmpty()}">
+	        <h:dataTable value="#{citizensController.getCitizensList()}" var="item">
+	            <h:column>
+	            	<f:facet name="header">
+	            		ID
+	            	</f:facet>
+	            	#{item.getId()}
+	            </h:column>
+	            <h:column>
+	            	<f:facet name="header">
+	            		First Name
+	            	</f:facet>
+	            	#{item.getFirstName()}
+            	</h:column>
+            	<h:column>
+	            	<f:facet name="header">
+	            		Last Name
+	            	</f:facet>
+	            	#{item.getLastName()}
+            	</h:column>
+            	<h:column>
+	            	<f:facet name="header">
+	            		Sex
+	            	</f:facet>
+	            	#{item.getSex()}
+            	</h:column>
+            	<h:column>
+	            	<f:facet name="header">
+	            		Date of Birth
+	            	</f:facet>
+	            	#{item.getBirthday()}
+            	</h:column>
+	            <h:column>
+	                <h:commandButton value="Edit" 
+	                action="#{citizensController.updateCitizen(item.getId())}" />
+	            </h:column>
+	            <h:column>
+	                <h:commandButton value="Delete" 
+	                action="#{citizensController.deleteCitizen(item.getId())}" />
+	            </h:column>
+	        </h:dataTable>
+	    </h:form>
+	    
+	    <h:panelGroup 
+	    rendered ="#{empty citizensController.getCitizensList().isEmpty()}">
+	        <p>No citizens. Please add citizens.</p>
+	    </h:panelGroup>
+	    
+	    <h:panelGroup rendered="#{!citizensController.updateCitizen(item.id)}">
+	        <h3>Add citizen</h3>
+	        <h:form>
+	            <p>First Name: <h:inputText value="#{item.getFirstName()}" /></p>
+	            <p>Last Name: <h:inputText value="#{item.getLastName()}" /></p>
+	            <p>Sex (M o F): <h:inputText value="#{item.getSex()}" /></p>
+	            <p>Date of Birth (YYYY-MM-DD): 
+	            <h:inputText value="#{item.getBirthday()}" /></p>
+	            <p>
+	                <h:commandButton value="Add" 
+	                action="#{citizensController.createCitizen()}" />
+	            </p>
+	        </h:form>
+	    </h:panelGroup>
+	</body>
+</html>
